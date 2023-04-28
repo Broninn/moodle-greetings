@@ -15,13 +15,26 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin strings are defined here.
- *
  * @package     local_greetings
- * @category    string
  * @copyright   2023 Bruno Henrique da Silva Mosko <bruno-hs@outlook.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Greetings';
+require_once('../../config.php');
+
+$context = context_system::instance();
+$PAGE->set_context($context);
+$PAGE->set_url(new moodle_url('/local/greetings/index.php'));
+$PAGE->set_pagelayout('standard');
+$PAGE->set_title($SITE->fullname);
+$PAGE->set_heading(get_string('pluginname', 'local_greetings'));
+
+echo $OUTPUT->header();
+
+if (isloggedin()) {
+    echo '<h3>Greetings, ' . fullname($USER) . '</h3>';
+} else {
+    echo '<h3>Greetings, user</h3>';
+}
+
+echo $OUTPUT->footer();
